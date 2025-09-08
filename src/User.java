@@ -31,7 +31,7 @@ public class User {
         return borrowedItems;
     }
 
-    public void setBorrowedItems(LibraryItem item){
+    public void BorrowedItem(LibraryItem item){
         borrowedItems.add(item);
     }
 
@@ -39,4 +39,11 @@ public class User {
         borrowedItems.removeIf(item -> item.getItemId().equals(itemId));
     }
 
+    public String toFileString(){
+        StringBuilder borrowedIds = new StringBuilder();
+        for(LibraryItem item : borrowedItems){
+            borrowedIds.append(item.getItemId()).append(",");
+        }
+        return String.format("USER|%s|%s|%s|%s", userId, name, email, borrowedIds.toString());
+    }
 }

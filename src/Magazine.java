@@ -7,6 +7,7 @@ public class Magazine extends LibraryItem{
         super(itemId);
         this.title = title;
         this.issueNumber = issueNumber;
+    
     }
 
     @Override
@@ -20,5 +21,10 @@ public class Magazine extends LibraryItem{
 
     public String getIssueNumber(){
         return  issueNumber;
+    }
+
+    @Override
+    public String toFileString() {
+        return String.format("MAGAZINE|%s|%s|%s|%b", itemId, title, issueNumber, isAvailable);
     }
 }
