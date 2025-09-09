@@ -16,8 +16,10 @@ public abstract class LibraryItem {
      }
 
      public void setAvailable(boolean available){
-        isAvailable = available;
+        this.isAvailable = available;
      }
 
      public abstract String displayInfo();
+
+     public abstract String toFileString();
 }
