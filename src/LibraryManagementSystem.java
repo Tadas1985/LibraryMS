@@ -14,6 +14,7 @@ public class LibraryManagementSystem {
     // and ISBN. Needs 4 digits
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     private static final Pattern ISBN_PATTERN = Pattern.compile("^\\d{4}$");
+    private static final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z]{2,15}$");
 
     public LibraryManagementSystem(String itemsFile, String usersFile){
         this.items = new ArrayList<>();
@@ -21,6 +22,13 @@ public class LibraryManagementSystem {
         this.itemsFile = itemsFile;
         this.usersFile = usersFile;
         loadData();
+    }
+
+    private boolean isIdNumeric(String userId) {
+        if (userId == null || userId.isEmpty()){
+            return false;
+        }
+            return userId.matches("\\d+");
     }
 
     private boolean isValidEmail(String email){
@@ -31,6 +39,11 @@ public class LibraryManagementSystem {
     private boolean isValidIsbn(String isbn){
         Matcher matcher = ISBN_PATTERN.matcher(isbn);
         return ISBN_PATTERN.matcher(isbn.replace("-","")).matches();
+    }
+
+    private boolean isValidName(String name){
+        Matcher matcher = NAME_PATTERN.matcher(name);
+        return matcher.matches();
     }
 
     private void loadData(){
@@ -114,6 +127,12 @@ public class LibraryManagementSystem {
     // CRUD operations
     public void addUser(String userId, String name, String email){
         try{
+            if(!isIdNumeric(userId)){
+                throw new IllegalArgumentException("Id must be numeric value");
+            }
+            if(!isValidName(name)){
+                throw new IllegalArgumentException("Invalid name format");
+            }
             if(!isValidEmail(email)){
                 throw new IllegalArgumentException("Invalid email format");
             }
@@ -230,6 +249,4 @@ public class LibraryManagementSystem {
             System.err.println("Error: " + e.getMessage());
         }
     }
-
-
 }
