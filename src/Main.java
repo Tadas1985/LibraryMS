@@ -18,7 +18,7 @@ public class Main {
             System.out.println("6. Display All Items");
             System.out.println("7. Display User Borrowed Items");
             System.out.println("8. Exit");
-            System.out.print("Choose an option: ");
+            System.out.print("------------\nChoose an option: ");
 
             try {
                 String choice = reader.readLine();
