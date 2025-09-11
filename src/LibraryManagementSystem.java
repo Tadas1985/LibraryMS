@@ -15,6 +15,7 @@ public class LibraryManagementSystem {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     private static final Pattern ISBN_PATTERN = Pattern.compile("^\\d{4}$");
     private static final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z]{2,15}$");
+    private static final Pattern ID_PATTERN = Pattern.compile("^\\d+$");
 
     public LibraryManagementSystem(String itemsFile, String usersFile){
         this.items = new ArrayList<>();
@@ -43,6 +44,11 @@ public class LibraryManagementSystem {
 
     private boolean isValidName(String name){
         Matcher matcher = NAME_PATTERN.matcher(name);
+        return matcher.matches();
+    }
+
+    private boolean isValidItemId(String itemId){
+        Matcher matcher = ID_PATTERN.matcher(itemId);
         return matcher.matches();
     }
 
@@ -149,6 +155,12 @@ public class LibraryManagementSystem {
 
     public void addBook(String itemId, String title, String author, String isbn) {
         try {
+            if(!isValidItemId(itemId)){
+                throw new IllegalArgumentException("Book ID must be a positive numeric value");
+            }
+            if(!isValidName(author)){
+                throw new IllegalArgumentException("Invalid name format");
+            }
             if (!isValidIsbn(isbn)) {
                 throw new IllegalArgumentException("Invalid ISBN format");
             }
@@ -165,6 +177,12 @@ public class LibraryManagementSystem {
 
     public void addMagazine(String itemId, String title, String issueNumber) {
         try {
+            if(!isValidItemId(itemId)){
+                throw new IllegalArgumentException("Magazine ID must be a positive numeric value");
+            }
+            if (!isValidIsbn(issueNumber)) {
+                throw new IllegalArgumentException("Invalid issue number format");
+            }
             if (items.stream().anyMatch(i -> i.getItemId().equals(itemId))) {
                 throw new IllegalArgumentException("Item ID already exists");
             }
