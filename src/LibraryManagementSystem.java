@@ -33,8 +33,8 @@ public class LibraryManagementSystem {
     }
 
     private boolean isValidEmail(String email){
-        Matcher matchecr = EMAIL_PATTERN.matcher(email);
-        return  matchecr.matches();
+        Matcher matcher = EMAIL_PATTERN.matcher(email);
+        return  matcher.matches();
     }
 
     private boolean isValidIsbn(String isbn){
@@ -62,20 +62,17 @@ public class LibraryManagementSystem {
                 switch (parts[0]){
                     case "BOOK":
                         if(parts.length == 6){
-                            // items.add(new Book(parts[1],parts[2],parts[3],parts[4], Boolean.parseBoolean(parts[5])));
                             items.add(new Book(parts[1],parts[2],parts[3],parts[4]));
                         }
                         break;
                     case "MAGAZINE":
                         if(parts.length == 5){
-                            // items.add(new Magazine(parts[1], parts[2], parts[3], Boolean.parseBoolean(parts[4])));
                             items.add(new Magazine(parts[1], parts[2], parts[3]));
                         }
                         break;
                 }
             }
-        }catch (FileNotFoundException e){
-
+        }catch (FileNotFoundException ignored){
         }catch (IOException e){
             System.err.println("Error loading items: " + e.getMessage());
         }
@@ -101,8 +98,7 @@ public class LibraryManagementSystem {
                 }
                 users.add(user);
             }
-        }catch (FileNotFoundException e){
-
+        }catch (FileNotFoundException ignored){
         }catch (IOException e){
             System.err.println("Error loading users: " + e.getMessage());
         }
